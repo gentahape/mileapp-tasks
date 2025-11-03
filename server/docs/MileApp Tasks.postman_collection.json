@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "3ab5d1b5-679e-4354-b6eb-2837fc767e3f",
+		"name": "MileApp Tasks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11831890"
+	},
+	"item": [
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('it should response 201 status code', () => {",
+									"    pm.expect(pm.response).to.have.status(201);",
+									"});",
+									"",
+									"pm.test('response Content-Type header should have application/json value', () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+									"}); ",
+									"",
+									"pm.test('response body should be an object', () => {",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson).to.be.an('object');",
+									"});",
+									"",
+									"const responseJson = pm.response.json();",
+									"pm.environment.set('task_id', responseJson._id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"New Feature\",\n    \"descriptiion\": \"New feature on tasks module\",\n    \"status\": \"progress\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tasks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('it should response 200 status code', () => {",
+									"    pm.expect(pm.response).to.have.status(200);",
+									"});",
+									"",
+									"pm.test('response Content-Type header should have application/json value', () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+									"}); ",
+									"",
+									"pm.test('response body should be an object', () => {",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson).to.be.an('object');",
+									"});",
+									"",
+									"pm.test('response body should have correct property types', () => {",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson).to.have.property('data').to.be.an('array');",
+									"    pm.expect(responseJson).to.have.property('meta').to.be.an('object');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tasks?page=1&limit=10&sortBy=createdAt&sortOrder=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc"
+								},
+								{
+									"key": "status",
+									"value": "todo",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should response 200 status code', () => {",
+							"    pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test('response Content-Type header should have application/json value', () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.includes('application/json');",
+							"}); ",
+							"",
+							"pm.test('response body should be an object', () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.be.an('object');",
+							"});",
+							"",
+							"const responseJson = pm.response.json();",
+							"pm.environment.set('access_token', responseJson.token);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"gentahp@mile.app\",\n    \"password\": \"gentahp123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

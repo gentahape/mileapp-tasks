@@ -29,9 +29,9 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - MONGODB_URI=mongodb://mileapp_tasks:mileapp_tasks123@mongo:27017/
+      - MONGODB_URI=mongodb://mileapp_tasks:mileapp_tasks123@mongo:27017/mileapp_tasks_db?authSource=admin
       - PORT=3001
-    command: npx nodemon app.js
+    command: npx nodemon server.js
     depends_on:
       - mongo
 
@@ -42,8 +42,8 @@ services:
     ports:
       - "27017:27017"
     environment:
-      - MONGO_USER=mileapp_tasks
-      - MONGO_PASS=mileapp_tasks123
+      - MONGO_INITDB_ROOT_USERNAME=mileapp_tasks
+      - MONGO_INITDB_ROOT_PASSWORD=mileapp_tasks123
     volumes:
       - mongo-data-dev:/data/db
 

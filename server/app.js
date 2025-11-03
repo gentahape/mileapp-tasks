@@ -1,11 +1,16 @@
-const express = require("express");
+import express from "express";
+import authRoutes from './routes/authRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!') 
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-});
+app.use('/login', authRoutes);
+app.use('/tasks', taskRoutes);
+
+export default app;
