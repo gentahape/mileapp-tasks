@@ -1,0 +1,43 @@
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: mileapp-tasks-client
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NUXT_PUBLIC_API_BASE_URL=http://server:3001
+      - NUXT_PRIVATE_API_BASE_URL=http://server:3001
+    depends_on:
+      - server
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mileapp-tasks-server
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mileapp_tasks:mileapp_tasks123@mongo:27017/
+      - PORT=3001
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:8.0
+    container_name: mileapp-tasks-mongo
+    restart: always
+    environment:
+      - MONGO_USER=mileapp_tasks
+      - MONGO_PASS=mileapp_tasks123
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
