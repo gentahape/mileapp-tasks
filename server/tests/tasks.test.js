@@ -115,7 +115,6 @@ describe('Task API', () => {
         .get(`/tasks/${fakeId}`)
         .set('Authorization', `Bearer ${MOCK_TOKEN}`);
       
-      console.log(res.body);
       expect(res.statusCode).toBe(404);
       expect(res.body.message).toBe('Task not found');
     });

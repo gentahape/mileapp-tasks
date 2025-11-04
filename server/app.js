@@ -1,9 +1,14 @@
 import express from "express";
+import cors from "cors";
 import authRoutes from './routes/authRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 
 const app = express();
 
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true
+}))
 app.use(express.json());
 
 app.get('/', (req, res) => {
