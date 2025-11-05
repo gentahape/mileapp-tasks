@@ -98,6 +98,7 @@ My main indexes are:
 ```javascript
 db.tasks.createIndex({ "userId": 1, "status": 1, "createdAt": -1 })
 ```
+---
 
 ## 5. How to Run Project
 
