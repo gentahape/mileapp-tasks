@@ -26,6 +26,20 @@
 
   watch([selectedStatus, sortBy, currentPage], loadData);
 
+  const formatDateTime = (isoString: string) => {
+    if (!isoString) return 'No date';   
+    const date = new Date(isoString);
+    
+    return date.toLocaleString('id-ID', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+  };
+
   const changePage = (page: number) => {
     if (page > 0 && page <= (meta.value?.totalPages || 1)) {
       currentPage.value = page;
@@ -108,6 +122,9 @@
           </h3>
           <p class="text-sm text-gray-700">
             {{ task.description }}
+          </p>
+          <p class="mt-1 text-xs text-gray-700">
+            Created at: {{ formatDateTime(task.createdAt) }}
           </p>
         </div>
 
