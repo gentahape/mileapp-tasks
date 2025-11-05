@@ -8,7 +8,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NUXT_PUBLIC_API_BASE_URL=http://server:3001
+      - NUXT_PUBLIC_API_BASE_URL=http://localhost:3001
       - NUXT_PRIVATE_API_BASE_URL=http://server:3001
     depends_on:
       - server
@@ -23,7 +23,7 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=production
-      - MONGODB_URI=mongodb://mileapp_tasks:mileapp_tasks123@mongo:27017/
+      - MONGODB_URI=mongodb://mileapp_tasks:mileapp_tasks123@mongo:27017/mileapp_tasks_db?authSource=admin
       - PORT=3001
     depends_on:
       - mongo
@@ -34,8 +34,8 @@ services:
     container_name: mileapp-tasks-mongo
     restart: always
     environment:
-      - MONGO_USER=mileapp_tasks
-      - MONGO_PASS=mileapp_tasks123
+      - MONGO_INITDB_ROOT_USERNAME=mileapp_tasks
+      - MONGO_INITDB_ROOT_PASSWORD=mileapp_tasks123
     volumes:
       - mongo-data:/data/db
 
