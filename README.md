@@ -98,3 +98,46 @@ My main indexes are:
 ```javascript
 db.tasks.createIndex({ "userId": 1, "status": 1, "createdAt": -1 })
 ```
+
+## 5. How to Run Project
+
+This project is fully managed by Docker to ensure a consistent environment.
+
+### 1. Environment Configuration
+The First, you need to create your own `.env` configuration file.
+
+1.  Copy the provided `.env.example` file:
+    ```bash
+    cp .env.example .env
+    ```
+
+2.  Open the newly created `.env` file and set the variables in it according to your local needs.
+
+### 2. Running the Application
+You can run the application in development or production mode.
+
+#### Development Mode
+This mode enables hot-reload for both frontend (Nuxt) and backend (Express/Nodemon).
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+Once running, the application will be available at:
+
+* Frontend (Nuxt): http://localhost:3000 / Your host & specific port.
+* Backend (Express): http://localhost:3001 / Your host & specific port.
+
+#### Production Mode
+This mode will build an optimized production image and run it.
+
+```bash
+docker-compose -f docker-compose.prod.yml up --build -d
+```
+*The -d (detached) flag will run the container in the background.
+
+### Running Unit Tests (Backend)
+To run API unit tests, make sure your development container is running, then run:
+```bash
+docker-compose -f docker-compose.(dev/prod).yml se exec server npm test
+```

@@ -5,14 +5,14 @@ services:
       dockerfile: Dockerfile
     container_name: mileapp-tasks-client-dev
     ports:
-      - "3000:3000"
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
     volumes:
       - ./client:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
-      - NUXT_PUBLIC_API_BASE_URL=http://localhost:3001
-      - NUXT_PRIVATE_API_BASE_URL=http://server:3001
+      - NODE_ENV=${NODE_ENV}
+      - NUXT_PUBLIC_API_BASE_URL=${NUXT_PUBLIC_API_BASE_URL}
+      - NUXT_PRIVATE_API_BASE_URL=${NUXT_PRIVATE_API_BASE_URL}
     command: npm run dev
     depends_on:
       - server
@@ -23,14 +23,14 @@ services:
       dockerfile: Dockerfile
     container_name: mileapp-tasks-server-dev
     ports:
-      - "3001:3001"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     volumes:
       - ./server:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
-      - MONGODB_URI=mongodb://mileapp_tasks:mileapp_tasks123@mongo:27017/mileapp_tasks_db?authSource=admin
-      - PORT=3001
+      - NODE_ENV=${NODE_ENV}
+      - MONGODB_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:${MONGODB_PORT}/${MONGODB_NAME}?authSource=admin
+      - PORT=${SERVER_PORT}
     command: npx nodemon server.js
     depends_on:
       - mongo
@@ -40,10 +40,10 @@ services:
     container_name: mileapp-tasks-mongo-dev
     restart: always
     ports:
-      - "27017:27017"
+      - "${MONGODB_PORT}:${MONGODB_PORT}"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=mileapp_tasks
-      - MONGO_INITDB_ROOT_PASSWORD=mileapp_tasks123
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo-data-dev:/data/db
 
